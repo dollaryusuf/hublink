@@ -1,0 +1,5 @@
+{
+  "name": "HubLink",
+  "description": "Integrated mobile marketplace for property rentals and verified artisans in Nigeria.",
+  "requestFramePermissions": ["camera", "geolocation"]
+}

@@ -1,0 +1,93 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "System user (Client, Artisan, or Agent)",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "name": { "type": "string", "description": "Full name" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["client", "artisan", "agent", "admin"] },
+        "isVerified": { "type": "boolean" },
+        "ninVerified": { "type": "boolean" },
+        "walletBalance": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "name", "email", "role"]
+    },
+    "Property": {
+      "title": "Property",
+      "description": "Real estate listing",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "location": { "type": "string" },
+        "price": { "type": "number" },
+        "pricePeriod": { "type": "string", "enum": ["year", "month", "sqm"] },
+        "type": { "type": "string", "enum": ["residential", "commercial", "land", "shortlet"] },
+        "category": { "type": "string", "enum": ["apartment", "house", "shop", "office", "land"] },
+        "images": { "type": "array", "items": { "type": "string" } },
+        "ownerId": { "type": "string" },
+        "isVerified": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "location", "price", "ownerId"]
+    },
+    "Artisan": {
+      "title": "Artisan",
+      "description": "Professional service provider profile",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "role": { "type": "string" },
+        "bio": { "type": "string" },
+        "location": { "type": "string" },
+        "rating": { "type": "number" },
+        "reviewCount": { "type": "number" },
+        "jobCount": { "type": "number" },
+        "portfolio": { "type": "array", "items": { "type": "string" } },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "isVerified": { "type": "boolean" },
+        "ninVerified": { "type": "boolean" }
+      },
+      "required": ["userId", "role", "location"]
+    },
+    "Job": {
+      "title": "Job",
+      "description": "Service request or active project",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "quoted", "funded", "in-progress", "completed", "cancelled"] },
+        "clientId": { "type": "string" },
+        "artisanId": { "type": "string" },
+        "budget": { "type": "number" },
+        "quote": { "type": "number" },
+        "escrowStatus": { "type": "string", "enum": ["none", "held", "released", "disputed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "clientId", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/properties/{propertyId}": {
+      "schema": "Property",
+      "description": "Property listings"
+    },
+    "/artisans/{artisanId}": {
+      "schema": "Artisan",
+      "description": "Artisan profiles"
+    },
+    "/jobs/{jobId}": {
+      "schema": "Job",
+      "description": "Job requests and contracts"
+    }
+  }
+}
